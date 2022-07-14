@@ -3,20 +3,25 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { Header } from './Components/HeaderSection/header';
 import { PostSection } from './Components/PostsSection/PostSection';
-import {pagination} from  "./utils/index"
+import {pagination} from  "./utils/index";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import { SinglePostPage } from './singlePostPage/singlePost';
 
 function App() {
   // state
   const [fetchData,setFetchData] = useState([])
   const [searchInput,setSearchInput]=useState("");
-  const [posts,setPosts]=useState([])
+  const [posts,setPosts]=useState([]);
+  const [singlePost,setSinglePost]= useState([])
   
 
   //handler
   const inputHandler = (event)=>{
     setSearchInput(event.target.value)
   }
-  
+  const singlePostHandler =(data)=>{
+    setSinglePost(data)
+  }
   //useEffect use
   useEffect(()=>{
     fetch('https://jsonplaceholder.typicode.com/posts')
@@ -30,20 +35,34 @@ function App() {
 
   useEffect(()=>{
     let filteredPost = fetchData.filter((item)=> {
-      return  item.title.startsWith(searchInput.toLowerCase());
+      return  item.title.toLowerCase().startsWith(searchInput.toLowerCase());
     })
     setPosts(filteredPost)
   },[searchInput])
-  console.log(posts)
+
   // pagination function use from utils
-  const paginatedList = pagination(posts,9)
+  const paginatedList = pagination(posts,9);
 
   return (
-    <div className="App">
-      <Header inputHandler={inputHandler} searchInput={searchInput} />
-      <hr />
-      <PostSection posts={paginatedList} />
-    </div>
+    <BrowserRouter className="App">
+      <Routes >
+        <Route 
+          path='/' 
+          element={
+            <>
+              <Header inputHandler={inputHandler} searchInput={searchInput} />
+              <hr />
+              <PostSection 
+              posts={paginatedList} 
+              singePostHandler={singlePostHandler} 
+              />
+            </>
+          } 
+        />
+        <Route path= "/post" element={<SinglePostPage singlePost={singlePost} />} />
+      </Routes>
+      
+    </ BrowserRouter>
   );
 }
 

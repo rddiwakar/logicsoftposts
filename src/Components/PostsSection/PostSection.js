@@ -3,7 +3,7 @@ import React from "react";
 //import { pagination } from "../../utils";
 import { PageNavigator } from "../Pagination/pagination";
 import "./PostSection.css"
-const PostSection = ({ posts }) => {
+const PostSection = ({ posts, singePostHandler }) => {
     const [pageNum, setPageNum] = React.useState(0)
     const handlePageNum = (data) => {
         setPageNum(data)
@@ -15,7 +15,11 @@ const PostSection = ({ posts }) => {
                     <>
                         <div className="posts">
                             {posts[pageNum] && posts[pageNum].map(post => {
-                                return <Post key={post.id} postData={post} />
+                                return (<Post 
+                                            key={post.id} 
+                                            postData={post} 
+                                            singePostHandler={singePostHandler} 
+                                        />)
                             })}
                         </div>
                         <PageNavigator
