@@ -3,18 +3,19 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { Header } from './Components/HeaderSection/header';
 import { PostSection } from './Components/PostsSection/PostSection';
-
+import {pagination} from  "./utils/index"
 function App() {
   // state
   const [fetchData,setFetchData] = useState([])
   const [searchInput,setSearchInput]=useState("");
   const [posts,setPosts]=useState([])
+  
 
   //handler
   const inputHandler = (event)=>{
     setSearchInput(event.target.value)
   }
-
+  
   //useEffect use
   useEffect(()=>{
     fetch('https://jsonplaceholder.typicode.com/posts')
@@ -32,10 +33,13 @@ function App() {
     })
     setPosts(filteredPost)
   },[searchInput])
+
+  const paginatedList = pagination(posts,10)
+  
   return (
     <div className="App">
       <Header inputHandler={inputHandler} searchInput={searchInput} />
-      <PostSection posts={posts} />
+      <PostSection posts={paginatedList} />
     </div>
   );
 }
