@@ -1,23 +1,21 @@
-import logo from './logo.svg';
+
+import { useEffect, useState } from 'react';
 import './App.css';
+import { Header } from './Components/HeaderSection/header';
+import { PostSection } from './Components/PostsSection/PostSection';
 
 function App() {
+  const [posts,setPosts] = useState([])
+  useEffect(()=>{
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.json())
+      .then(json => setPosts(json))
+      .catch(err=>console.log(err))
+  },[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <PostSection />
     </div>
   );
 }
