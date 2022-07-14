@@ -1,5 +1,5 @@
 import { Input } from "../Input/input"
-
+import "./header.css"
 const Header = ({searchInput,inputHandler}) => {
     return (
         <div className='Header'>

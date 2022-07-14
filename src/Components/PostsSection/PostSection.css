@@ -1,0 +1,8 @@
+.PostSection{
+    padding:10px 30px;
+}
+.posts{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

@@ -4,6 +4,7 @@ import './App.css';
 import { Header } from './Components/HeaderSection/header';
 import { PostSection } from './Components/PostsSection/PostSection';
 import {pagination} from  "./utils/index"
+
 function App() {
   // state
   const [fetchData,setFetchData] = useState([])
@@ -29,16 +30,18 @@ function App() {
 
   useEffect(()=>{
     let filteredPost = fetchData.filter((item)=> {
-      return  item.title.startsWith(searchInput);
+      return  item.title.startsWith(searchInput.toLowerCase());
     })
     setPosts(filteredPost)
   },[searchInput])
+  console.log(posts)
+  // pagination function use from utils
+  const paginatedList = pagination(posts,9)
 
-  const paginatedList = pagination(posts,10)
-  
   return (
     <div className="App">
       <Header inputHandler={inputHandler} searchInput={searchInput} />
+      <hr />
       <PostSection posts={paginatedList} />
     </div>
   );

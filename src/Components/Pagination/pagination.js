@@ -1,11 +1,14 @@
+import "./pagination.css";
+import { MdArrowBackIosNew as BackBtnICon } from 'react-icons/md';
+import {MdArrowForwardIos as NextBtnIcon} from "react-icons/md"
 const PageNavigator = ({setPageNum,pageNum,paginatedList}) => {
     return (
-        <div>
+        <div className="PageNavigator">
             <button
                 onClick={() => setPageNum(pageNum === 0 ? 0 : pageNum - 1)}
                 className='btn'
-            >back
-                {/* <BackBtnICon size='14px' /> */}
+            >
+                <BackBtnICon  />
             </button>
             {paginatedList.map((itm, idx) => {
                 return (
@@ -23,8 +26,8 @@ const PageNavigator = ({setPageNum,pageNum,paginatedList}) => {
                     () => setPageNum(pageNum !== (paginatedList.length - 1) ? (pageNum + 1) : (paginatedList.length - 1))
                 }
                 className='btn'
-            >next
-                {/* <NextBtnIcon size='14px' /> */}
+            >
+                <NextBtnIcon  />
             </button>
         </div>
     )
